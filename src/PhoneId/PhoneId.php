@@ -127,8 +127,7 @@ class PhoneId
 
         // Prepare headers
         if ($this->_accessToken) {
-            // TODO $headers['Authorization'] = 'Bearer ' . $this->_accessToken;
-            $data['access_token'] = $this->_accessToken;
+            $headers[] = 'Authorization: Bearer ' . $this->_accessToken;
         }
 
         // Curl options
