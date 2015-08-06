@@ -74,8 +74,8 @@ class PhoneId
     public function getAuthorizeUrl($params = array())
     {
         $defaults = array(
-            'clientId'    => $this->_clientId,
-            'redirectURL' => !empty($this->_options['redirect_uri']) ? $this->_options['redirect_uri'] : null
+            'client_id'    => $this->_clientId,
+            'redirect_uri' => !empty($this->_options['redirect_uri']) ? $this->_options['redirect_uri'] : null
         );
 
         return $this->_buildUrl('/static/login.html', array_merge($defaults, $params));
