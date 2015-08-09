@@ -10,15 +10,9 @@ Phone.id is a service that makes "login with your mobile number" so easy that hu
 
 ### Composer
 
-This library is installable via Composer. To include it in your projects, including the following in your `composer.json` file:
+This library is installable via Composer. To include it in your projects, run the following command:
 
-``` json
-{
-    "require": {
-        "pracucci/phoneid-php-sdk": "dev-master"
-    }
-}
-```
+`composer require pracucci/phoneid-php-sdk`
 
 
 ### How to register an app
@@ -36,3 +30,8 @@ Run tests before pushing a pull request:
 ``` bash
 phpunit --bootstrap src/PhoneId/autoload.php tests
 ```
+
+
+### License
+
+MIT

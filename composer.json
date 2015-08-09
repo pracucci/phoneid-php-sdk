@@ -1,4 +1,8 @@
 {
     "name": "pracucci/phoneid-php-sdk",
-    "version": "1.0.1"
+    "description": "Login with your mobile phone made easy.",
+    "version": "1.0.1",
+    "license": "MIT",
+    "keywords": [ "phoneid", "login", "mobile", "number" ],
+    "authors": [ { "name": "Marco Pracucci", "email": "marco@pracucci.com", "homepage": "http://www.pracucci.com" } ]
 }
