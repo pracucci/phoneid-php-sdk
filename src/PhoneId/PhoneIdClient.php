@@ -10,8 +10,9 @@ class PhoneIdClient
      * @param string $method
      * @param string $url
      * @param array  $data
+     * @param array  $options
      */
-    public function request($method, $url, $data = array())
+    public function request($method, $url, $data = array(), $options = array())
     {
         // Init curl
         $handle = curl_init($url);
@@ -22,8 +23,8 @@ class PhoneIdClient
         // Prepare headers
         $headers = array();
 
-        if ($this->_accessToken) {
-            $headers[] = 'Authorization: Bearer ' . $this->_accessToken;
+        if (!empty($options['access_token'])) {
+            $headers[] = 'Authorization: Bearer ' . $options['access_token'];
         }
 
         // Curl options
@@ -31,9 +32,9 @@ class PhoneIdClient
             CURLOPT_RETURNTRANSFER    => true,
             CURLOPT_FOLLOWLOCATION    => true,
             CURLOPT_MAXREDIRS         => 3,
-            CURLOPT_TIMEOUT           => $this->_options['request_timeout'],
-            CURLOPT_CONNECTTIMEOUT    => $this->_options['connect_timeout'],
-            CURLOPT_DNS_CACHE_TIMEOUT => $this->_options['dns_cache_timeout'],
+            CURLOPT_TIMEOUT           => $options['request_timeout'],
+            CURLOPT_CONNECTTIMEOUT    => $options['connect_timeout'],
+            CURLOPT_DNS_CACHE_TIMEOUT => $options['dns_cache_timeout'],
             CURLOPT_HTTPHEADER        => $headers
         ));
 

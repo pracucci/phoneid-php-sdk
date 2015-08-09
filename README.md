@@ -8,6 +8,19 @@ This PHP SDK allows you to easily implement the Phone.id authentication on web. 
 Phone.id is a service that makes "login with your mobile number" so easy that hurts.
 
 
+### Composer
+
+This library is installable via Composer. To include it in your projects, including the following in your `composer.json` file:
+
+``` json
+{
+    "require": {
+        "pracucci/phoneid-php-sdk": "dev-master"
+    }
+}
+```
+
+
 ### How to register an app
 
 To register an app and get Phone.id credentials, you should:

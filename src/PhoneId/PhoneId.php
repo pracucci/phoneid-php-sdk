@@ -13,7 +13,6 @@ class PhoneId
     private $_client;
     private $_clientId;
     private $_clientSecret;
-    private $_accessToken;
     private $_options;
 
 
@@ -38,13 +37,13 @@ class PhoneId
         $this->_client       = isset($options['client']) ? $options['client'] : new PhoneIdClient();
         $this->_clientId     = $clientId;
         $this->_clientSecret = $clientSecret;
-        $this->_accessToken  = null;
 
         // Store options, fallback to defaults
         $this->_options = array_merge(array(
             'connect_timeout'   => 5,
             'request_timeout'   => 10,
-            'dns_cache_timeout' => 60
+            'dns_cache_timeout' => 60,
+            'access_token'      => null
         ), $options);
     }
 
@@ -55,7 +54,7 @@ class PhoneId
      */
     public function setAccessToken($token)
     {
-        $this->_accessToken = $token;
+        $this->_options['access_token'] = $token;
     }
 
     /**
@@ -65,7 +64,7 @@ class PhoneId
      */
     public function getAccessToken()
     {
-        return $this->_accessToken;
+        return $this->_options['access_token'];
     }
 
     /**
@@ -91,7 +90,7 @@ class PhoneId
      */
     public function getMe()
     {
-        return $this->_client->request('GET', '/auth/users/me');
+        return $this->_client->request('GET', '/auth/users/me', array(), $this->_options);
     }
 
 }
