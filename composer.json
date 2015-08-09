@@ -4,5 +4,14 @@
     "version": "1.0.1",
     "license": "MIT",
     "keywords": [ "phoneid", "login", "mobile", "number" ],
-    "authors": [ { "name": "Marco Pracucci", "email": "marco@pracucci.com", "homepage": "http://www.pracucci.com" } ]
+    "authors": [{
+        "name": "Marco Pracucci",
+        "email": "marco@pracucci.com",
+        "homepage": "http://www.pracucci.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "PhoneId\\": "src/PhoneId/"
+        }
+    }
 }
