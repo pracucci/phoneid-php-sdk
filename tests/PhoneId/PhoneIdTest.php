@@ -1,6 +1,7 @@
 <?php
 
 use PhoneId\PhoneId;
+use PhoneId\PhoneIdClient;
 
 
 class PhoneIdTest extends PHPUnit_Framework_TestCase
@@ -26,6 +27,16 @@ class PhoneIdTest extends PHPUnit_Framework_TestCase
         $actual   = $p->getAuthorizeUrl(array('extra' => 'value'));
         $this->assertEquals($expected, $actual, 'should append query string parameters from input');
 
+    }
+
+    public function testGetMe()
+    {
+        $client = $this->getMockBuilder('PhoneIdClient')->setMethods(array('request'))->getMock();
+        $client->method('request')->willReturn(array('number' => '+123456789'));
+        $client->expects($this->once())->method('request')->with($this->equalTo('GET'), $this->equalTo('/auth/users/me'));
+
+        $p = new PhoneId(123, 'secret', array('client' => $client));
+        $this->assertEquals(array('number' => '+123456789'), $p->getMe());
     }
 
 }
