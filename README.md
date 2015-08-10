@@ -35,3 +35,11 @@ phpunit --bootstrap src/PhoneId/autoload.php tests
 ### License
 
 MIT
+
+
+### Changes
+
+#### 0.0.1 (2015-08-10)
+
+ - Server-side authentication support (see `examples/authentication`)
+ - Installable via Composer (psr-4 autoloader)
