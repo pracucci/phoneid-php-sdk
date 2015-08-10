@@ -32,11 +32,11 @@ class PhoneIdTest extends PHPUnit_Framework_TestCase
     public function testGetMe()
     {
         $client = $this->getMockBuilder('PhoneIdClient')->setMethods(array('request'))->getMock();
-        $client->method('request')->willReturn(array('number' => '+123456789'));
+        $client->method('request')->willReturn(array('phone_number' => '+123456789'));
         $client->expects($this->once())->method('request')->with($this->equalTo('GET'), $this->equalTo('/auth/users/me'));
 
         $p = new PhoneId(123, 'secret', array('client' => $client));
-        $this->assertEquals(array('number' => '+123456789'), $p->getMe());
+        $this->assertEquals(array('phone_number' => '+123456789'), $p->getMe());
     }
 
 }
