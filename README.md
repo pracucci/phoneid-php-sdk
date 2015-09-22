@@ -39,6 +39,14 @@ MIT
 
 ### Changes
 
+#### 0.0.2 (2015-09-22)
+
+ - Update the SDK to support new endpoints
+ - Added `PhoneId::exchangeAuthorizationCode()` method to exchange an authorization code with an access token
+ - Fix: POST request content-encoding should be `application/x-www-form-urlencoded`
+ - Fix: `PhoneIdClient` didn't throw exceptions successfully on errors
+
+
 #### 0.0.1 (2015-08-10)
 
  - Server-side authentication support (see `examples/authentication`)

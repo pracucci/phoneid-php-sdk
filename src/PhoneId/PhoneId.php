@@ -4,8 +4,6 @@ namespace PhoneId;
 
 use PhoneId\PhoneIdClient;
 use PhoneId\Exceptions\PhoneIdClientException;
-use PhoneId\Exceptions\PhoneIdServerException;
-use PhoneId\Exceptions\PhoneIdNetworkException;
 
 
 class PhoneId
@@ -77,11 +75,36 @@ class PhoneId
     public function getAuthorizeUrl($params = array())
     {
         $defaults = array(
-            'client_id'    => $this->_clientId,
-            'redirect_uri' => !empty($this->_options['redirect_uri']) ? $this->_options['redirect_uri'] : null
+            'client_id'     => $this->_clientId,
+            'redirect_uri'  => !empty($this->_options['redirect_uri']) ? $this->_options['redirect_uri'] : null,
+            'response_type' => 'code'
         );
 
-        return $this->_client->buildUrl('/static/login.html', array_merge($defaults, $params));
+        return $this->_client->buildLoginUrl('/login', array_merge($defaults, $params));
+    }
+
+    /**
+     * Exchanges an authorization code with an access token.
+     *
+     * @param  string $code     Authorization code to exchange
+     * @param  bool   $set      True to set the access token on the local instance
+     * @throws PhoneIdException
+     * @return array
+     */
+    public function exchangeAuthorizationCode($code, $set = true)
+    {
+        // Exchange token
+        $res = $this->_client->request('POST', '/auth/token', array(
+            'grant_type'    => 'authorization_code',
+            'code'          => $code,
+            'client_id'     => $this->_clientId,
+            'client_secret' => $this->_clientSecret), $this->_options);
+
+        if ($set) {
+            $this->setAccessToken($res['access_token']);
+        }
+
+        return $res;
     }
 
     /**
@@ -90,7 +113,7 @@ class PhoneId
      */
     public function getMe()
     {
-        return $this->_client->request('GET', '/auth/users/me', array(), $this->_options);
+        return $this->_client->request('GET', '/users/me', array(), $this->_options);
     }
 
 }

@@ -2,22 +2,25 @@
 
 namespace PhoneId;
 
+use PhoneId\Exceptions\PhoneIdClientException;
+use PhoneId\Exceptions\PhoneIdServerException;
+use PhoneId\Exceptions\PhoneIdNetworkException;
 
 class PhoneIdClient
 {
 
     /**
      * @param string $method
-     * @param string $url
+     * @param string $path
      * @param array  $data
      * @param array  $options
      */
-    public function request($method, $url, $data = array(), $options = array())
+    public function request($method, $path, $data = array(), $options = array())
     {
         // Init curl
-        $handle = curl_init($url);
+        $handle = curl_init();
         if ($handle === false) {
-            throw new PhoneIdClientException("Unable to init curl with url: $url");
+            throw new PhoneIdClientException("Unable to init curl");
         }
 
         // Prepare headers
@@ -43,12 +46,13 @@ class PhoneIdClient
         {
             case 'POST':
                 curl_setopt($handle, CURLOPT_POST, true);
-                curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+                curl_setopt($handle, CURLOPT_URL, $this->buildApiUrl($path));
+                curl_setopt($handle, CURLOPT_POSTFIELDS, http_build_query($data));
                 break;
 
             case 'GET':
                 curl_setopt($handle, CURLOPT_HTTPGET, true);
-                curl_setopt($handle, CURLOPT_URL, $this->buildUrl($url, $data));
+                curl_setopt($handle, CURLOPT_URL, $this->buildApiUrl($path, $data));
                 break;
 
             default:
@@ -85,9 +89,30 @@ class PhoneIdClient
      * @param array  $params
      * @return string
      */
-    public function buildUrl($path, $params)
+    public function buildApiUrl($path, $params)
     {
-        $url = 'https://api.phone.id/v2' . $path;
+        return $this->_buildUrl('api.phone.id', $path, $params);
+    }
+
+    /**
+     * @param string $path
+     * @param array  $params
+     * @return string
+     */
+    public function buildLoginUrl($path, $params)
+    {
+        return $this->_buildUrl('login.phone.id', $path, $params);
+    }
+
+    /**
+     * @param string $domain
+     * @param string $path
+     * @param array  $params
+     * @return string
+     */
+    private function _buildUrl($domain, $path, $params)
+    {
+        $url = 'https://' . $domain . '/v2' . $path;
 
         // Filter out empty params
         $params = array_filter($params, function($value) {

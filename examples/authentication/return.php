@@ -11,7 +11,10 @@ $clientSecret = '<your client secret>';
 $phoneId      = new PhoneId($clientId, $clientSecret);
 
 try {
-    $phoneId->setAccessToken($_GET['access_token']);
+    // Exchange auth code with access token
+    $phoneId->exchangeAuthorizationCode($_GET['code']);
+
+    // Fetch user data
     $me = $phoneId->getMe();
 
     echo 'User successfully authenticated: <br />';
